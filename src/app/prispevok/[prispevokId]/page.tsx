@@ -7,11 +7,13 @@ import Container from '@mui/material/Container';
 
 export const metadata = { title: `prispevok | Miskova stranocka` };
 
-export default function ProfilDetail() {
+export default function ProfilDetail( { params }: {
+    params: {id:string }
+} ) {
 
   return (
     <Container>
-      <Typography> prispevky </Typography>
+      <Typography> Detail prispevku {params.id} </Typography>
     </Container>
   );
 

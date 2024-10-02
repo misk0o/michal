@@ -7,12 +7,14 @@ import Container from '@mui/material/Container';
 
 export const metadata = { title: `Detail Profilu | Miskova stranocka` };
 
-export default function ProfilDetail() {
+export default function ProfilDetail( { params }: {
+  params: {id:string }
+} ) {
 
-  return (
-    <Container>
-      <Typography> Detail Profilu </Typography>
-    </Container>
-  );
+return (
+  <Container>
+    <Typography> Detail profilu {params.id} </Typography>
+  </Container>
+);
 
 }
