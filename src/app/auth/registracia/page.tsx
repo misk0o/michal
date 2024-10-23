@@ -1,18 +1,9 @@
+// src/app/auth/registracia/page.tsx
 
-// src/app/prispevok/[id]/page.tsx
+import SignUpView from "../../../sections/SignUpView";
 
+export const metadata = { title: "Registrácia užívateľa | ZoškaSnap" };
 
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-
-export const metadata = { title: `Registracia | Miskova stranocka` };
-
-export default function ProfilDetail() {
-
-  return (
-    <Container>
-      <Typography> Registrácia </Typography>
-    </Container>
-  );
-
+export default function SignUpPage() {
+  return <SignUpView />;
 }

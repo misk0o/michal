@@ -1,18 +1,9 @@
+// src/app/auth/odhlasenie/page.tsx
 
-// src/app/prispevok/[id]/page.tsx
+import SignOutView from "../../../sections/SignOutView";
 
+export const metadata = { title: "Odhlásenie | ZoškaSnap" };
 
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-
-export const metadata = { title: `odhlásenie | Miskova stranocka` };
-
-export default function ProfilDetail() {
-
-  return (
-    <Container>
-      <Typography> odhlásenie </Typography>
-    </Container>
-  );
-
+export default function SignOutPage() {
+  return <SignOutView />;
 }

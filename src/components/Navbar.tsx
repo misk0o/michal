@@ -1,60 +1,76 @@
+
+// /src/components/Navbar.tsx
+
 "use client";
 
-import React, { useState } from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import * as React from 'react';
+import { BottomNavigation, BottomNavigationAction, Box, Avatar } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import ArticleIcon from '@mui/icons-material/Article'; // For "Príspevky"
-import LoginIcon from '@mui/icons-material/Login'; // For "Prihlásenie"
-import PersonAddIcon from '@mui/icons-material/PersonAdd'; // For "Registrácia"
-import PersonIcon from '@mui/icons-material/Person';
+import SearchIcon from '@mui/icons-material/Search';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useRouter } from 'next/navigation';
-import Paper from '@mui/material/Paper';
+import { useSession } from "next-auth/react";
 
-const Navbar = () => {
-  const [value, setValue] = useState(0);
+export default function Navbar() {
+  const [value, setValue] = React.useState('/');
   const router = useRouter();
+  const { data: session, status } = useSession();
+
+  const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+    router.push(newValue);
+  };
+
+  // Non-authenticated navigation paths
+  const nonAuthPaths = [
+    { label: "Domov", value: "/", icon: <HomeIcon /> },
+    { label: "Prispevky", value: "/prispevok", icon: <AddCircleIcon /> },
+    { label: "Registrácia", value: "/auth/registracia", icon: <AppRegistrationIcon /> },
+    { label: "Prihlásenie", value: "/auth/prihlasenie", icon: <LoginIcon /> }
+  ];
+
+  // Authenticated navigation paths
+  const authPaths = [
+    { label: "Domov", value: "/", icon: <HomeIcon /> },
+    { label: "Hľadať", value: "/search", icon: <SearchIcon /> },
+    { label: "Pridať", value: "/add", icon: <AddCircleIcon /> },
+    {
+      label: "Profil",
+      value: "/profil",
+      icon: session?.user?.image ? (
+        <Avatar 
+          alt={session?.user?.name || "User"} 
+          src={session?.user?.image || undefined} 
+        />
+      ) : (
+        <Avatar>{session?.user?.name?.charAt(0) || "U"}</Avatar>
+      )
+    },
+    { label: "Odhlásiť", value: "/auth/odhlasenie", icon: <LogoutIcon /> },
+  ];
+
+  // Decide which paths to use based on authentication status
+  const navigationPaths = status === "authenticated" ? authPaths : nonAuthPaths;
 
   return (
-    <Paper
-      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
-      elevation={3}
-    >
+    <Box sx={{ width: '100%', position: 'fixed', bottom: 0 }}>
       <BottomNavigation
         showLabels
         value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
+        onChange={handleNavigation}
       >
-        <BottomNavigationAction
-          label="Domov"
-          icon={<HomeIcon />}
-          onClick={() => router.push('/')}
-        />
-        <BottomNavigationAction
-          label="Príspevky"
-          icon={<ArticleIcon />}
-          onClick={() => router.push('/prispevok')}
-        />
-        <BottomNavigationAction
-          label="Prihlásenie"
-          icon={<LoginIcon />}
-          onClick={() => router.push('/auth/prihlasenie')}
-        />
-        <BottomNavigationAction
-          label="Registrácia"
-          icon={<PersonAddIcon />}
-          onClick={() => router.push('/auth/registracia')}
-        />
-        <BottomNavigationAction
-          label="Profil"
-          icon={<PersonIcon />}
-          onClick={() => router.push('/profil')}
-        />
+        {navigationPaths.map((path) => (
+          <BottomNavigationAction
+            key={path.value}
+            label={path.label}
+            value={path.value}
+            icon={path.icon}
+          />
+        ))}
       </BottomNavigation>
-    </Paper>
+    </Box>
   );
-};
-
-export default Navbar;
+}
