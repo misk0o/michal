@@ -1,11 +1,21 @@
-// src/sections/SignOutView.tsx
+// src/sections/SignUpView.tsx
 
 "use client";
 
-import { signOut } from "next-auth/react";
-import { Button, Container, Typography } from "@mui/material";
+import {
+  Button,
+  //Checkbox,
+  Container,
+  //FormControlLabel,
+  //TextField,
+  Typography,
+  //Divider,
+} from "@mui/material";
+import { signIn } from "next-auth/react";
+import GoogleIcon from "@mui/icons-material/Google";
+//import FacebookIcon from "@mui/icons-material/Facebook";
 
-export default function SignOutView() {
+export default function SignUpView() {
   return (
     <Container
       maxWidth="xs"
@@ -20,12 +30,83 @@ export default function SignOutView() {
         borderRadius: 2,
       }}
     >
+      {/* Logo / Title */}
       <Typography variant="h5" sx={{ mb: 3 }}>
-        Naozaj sa chcete odhlásiť?
+        Registrácia
       </Typography>
-      <Button variant="contained" onClick={() => signOut()}>
-        Odhlásiť sa
+
+      {/* Sign-in link */}
+      <Typography variant="body1" sx={{ mb: 6 }}>
+        Už máte účet? <a href="/auth/prihlasenie">Prihláste sa</a>
+      </Typography>
+
+      {/* Google Sign Up */}
+      <Button
+        variant="outlined"
+        fullWidth
+        startIcon={<GoogleIcon />}
+        onClick={() => signIn("google")}
+        sx={{ mb: 1 }}
+      >
+        Registrovať sa účtom Google
       </Button>
+
+
     </Container>
   );
 }
+
+
+      // {/* Facebook Sign Up */}
+      // <Button
+      //   variant="outlined"
+      //   fullWidth
+      //   startIcon={<FacebookIcon />}
+      //   sx={{ mb: 4 }}
+      // >
+      //   Registrovať sa účtom Facebook
+      // </Button>
+
+      // {/* Divider */}
+      // <Divider sx={{ width: "100%", mb: 2 }}>
+      //   <Typography variant="body2">alebo</Typography>
+      // </Divider>
+
+      // {/* Email */}
+      // <TextField
+      //   margin="normal"
+      //   fullWidth
+      //   label="Email"
+      //   type="email"
+      //   variant="outlined"
+      //   required
+      //   defaultValue="your@email.com"
+      // />
+
+      // {/* Password */}
+      // <TextField
+      //   margin="normal"
+      //   fullWidth
+      //   label="Password"
+      //   type="password"
+      //   variant="outlined"
+      //   required
+      //   defaultValue="******"
+      // />
+
+      // {/* Checkbox */}
+      // <FormControlLabel
+      //   control={<Checkbox color="primary" />}
+      //   label="Chcem dostávať novinky na email"
+      //   sx={{ mt: 2 }}
+      // />
+
+      // {/* Sign Up Button */}
+      // <Button
+      //   variant="contained"
+      //   fullWidth
+      //   size="large"
+      //   sx={{ mt: 2, mb: 1 }}
+      // >
+      //   Registrovať
+      // </Button>
