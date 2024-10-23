@@ -10,3 +10,5 @@ export default function Home() {
     <Typography> NeDomovská stránka lalala </Typography>
   );
 }
+
+
